@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+
+<!-- Mirrored from thememarch.com/demo/html/malic/malic/login-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 26 Jan 2020 19:44:34 GMT -->
+<head>
+    <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
+    <script>
+        Weglot.initialize({
+            api_key: 'wg_97da7244e1d41e4bb79d3bd92880a0ce7'
+        });
+    </script>
+    {{ notifications_assets() }}
+    <script>
+        /**
+         * After calling notifications_assets() "pusher" is now available
+         * and you can use it this way
+         */
+
+            // select the channel you want to listen to
+        var channel = pusher.subscribe("notifications");// notifications channel
+        channel.bind("my-event", function(data) {
+            console.log('from notifications channel', data);
+        });
+
+        var channel = pusher.subscribe("messages");// messages channel
+        channel.bind("my-event", function(data) {
+            console.log('from messages channel', data);
+        });
+    </script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>HuntKingdom - Fishing & Hunting Club HTML Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" href="{{ asset('Front/') }}assets/images/favicon.png">
+    <link rel="shortcut icon" href="{{ asset('Front/') }}assets/images/favicon.ico">
+
+    <!-- CSS FILES HERE -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{{ asset('Front/') }}assets/css/vendors/plugins.min.css">
+    <link rel="stylesheet" href="{{ asset('Front/') }}assets/css/style.css">
+    {#    <script src="{{ asset('Front/') }}jquery-3.3.1.min.js"></script>#}
+
+    <!-- endinject -->
+</head>
+
+<body>
+
+<!-- Preloader -->
+{#<div class="tm-preloader">#}
+{#    <div class="container">#}
+{#        <div class="row justify-content-center">#}
+{#            <div class="col-lg-6">#}
+{#                <div class="tm-preloader-logo">#}
+{#                    <img src="{{ asset('Front/') }}assets/images/logo-white.png" alt="logo">#}
+{#                </div>#}
+{#                <span class="tm-preloader-progress"></span>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <button class="tm-button tm-button-small">Cancel Preloader</button>#}
+{#</div>#}
+<!--// Preloader -->
+
+<!-- Wrapper -->
+<div id="wrapper" class="wrapper">
+
+    <!-- Header -->
+    <div class="tm-header tm-header-sticky">
+
+        <div class="tm-header-toparea">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-8 col-12">
+                        <ul class="tm-header-info">
+                            <li><a href="tel:58800900"><i class="ion-ios-telephone"></i>58800900</a></li>
+                            <li><a href="mailto:contact@huntkingdom.tn"><i
+                                            class="ion-android-mail"></i>contact@huntkingdom.tn</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 col-12">
+                        <ul class="tm-header-icons">
+                            {% if app.user %}
+                                <li>
+
+                                    <div class="dropdown-menu-left">
+                                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                            <img src="{{ asset('usersPictures/' ~ app.user.imageId) }}" style="border-radius: 50%" alt="dropdown image" class="img-responsive"  width="35" height="35">
+                                            <span class="caret"> {{ app.user.username }}</span>
+                                        </button>
+                                        <ul class="dropdown-menu fa-user" >
+                                            <li ><a style="color: #0b0b0b" href="{{ path('fos_user_security_logout') }}">Log Out</a></li>
+                                            {% if is_granted('ROLE_ADMIN') %}
+                                            <li ><a style="color: #0b0b0b" href="{{ path('admin_homepage') }}">Panel Admin</a></li>
+                                            {% else %}
+
+                                            <li ><a style="color: #0b0b0b" href="{{ path('fos_user_profile_edit') }}">Edit Profile</a></li>
+                                                <li ><a style="color: #0b0b0b" href="{{ path('fos_user_change_password') }}">Edit Password</a></li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </li>
+
+                            {% else %}
+                                <li><a href="{{ path('fos_user_security_login') }}">Log In / Register</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="tm-header-bottomarea">
+            <div class="container">
+                <div class="tm-header-inner">
+                    <a href="{{ path('homepage') }}" class="tm-header-logo">
+                        <img src="{{ asset('Front/') }}assets/images/logo.png" alt="malic">
+                    </a>
+                    <nav class="tm-header-nav">
+                        <ul>
+                            <li><a href="{{ path('homepage') }}">Home</a></li>
+                            <li><a href="{{ path('evenement_indexclient') }}">Evenment</a></li>
+                            <li class="tm-header-nav-dropdown"><a href="#">Shop</a>
+                                <ul>
+                                    <li><a href="{{ path('shop_homepage') }}">Our Products</a></li>
+                                    {% if app.user %}
+                                    {% endif %}
+                                </ul>
+                            </li>
+                            <li class="tm-header-nav-dropdown"><a href="#">Blog</a>
+                                <ul>
+                                    <li><a href="{{ path('blog_homepage') }}">Our Blog</a></li>
+                                    {% if app.user %}
+                                        <li><a href="{{ path('addblog') }}">Add Blog</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                            <li><a href="{{ path('contact') }}">Contact</a></li>
+                            <li class="tm-header-nav-dropdown"><a href="">Location</a>
+                                <ul>
+                                    {% if app.user %}
+                                        <li><a href="{{ path('location_homepage') }}">Avaible Location</a></li>
+                                        <li><a href="{{ path('mylocation') }}">My Locations</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>                            {% if app.user %}
+                                <li class="tm-header-nav-dropdown"><a href="#">My Orders</a>
+                                    <ul>
+                                        <li><a href="{{ path('myorder') }}">My Orders</a></li>
+
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            </li>
+                            </li>
+                        </ul>
+                    </nav>
+                    <ul class="tm-header-utils">
+                        <li>
+                            <button class="tm-header-searchtrigger"><i class="ion-android-search"></i></button>
+                            <form class="tm-header-searchform" action="#">
+                                <input type="text" placeholder="Search">
+                                <button type="submit"><i class="ion-android-search"></i></button>
+                            </form>
+                        </li>
+                        <li><a href="{{ path('checkout')}}"><i class="ion-android-cart"></i><span style="padding-left: 5px">({{Count.orders}})</span></a></li>
+                    </ul>
+                    <div class="tm-mobilenav"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--// Header -->
+
+    {% block content %}
+
+    {% endblock %}
+    <!--// Page Content -->
+
+    <!-- Footer -->
+    <div class="tm-footer">
+        <div class="tm-footer-toparea tm-padding-section" data-bgimage="assets/images/footer-area-bg.jpg"
+             data-black-overlay="9">
+            <div class="container">
+                <div class="widgets widgets-footer row">
+
+                    <!-- Single Widget -->
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="single-widget widget-info">
+                            <a class="widget-info-logo" href="index.html"><img
+                                        src="{{ asset('Front/') }}assets/images/logo-white.png"
+                                        alt="white logo"></a>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sagittis orci ac
+                                odio dictum tincidunt. Donec ut metus leo auctor id faucibus.</p>
+                            <ul>
+                                "{{ socialButtons() }}"
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!--// Single Widget -->
+
+                    <!-- Single Widget -->
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="single-widget widget-contact">
+                            <h6 class="widget-title">Contact Us</h6>
+                            <ul>
+                                <li>
+                                    <i class="ion-ios-telephone-outline"></i>
+                                    <p><a href="tel:+18009156270">1 (800) 915 6270</a></p>
+                                    <p><a href="tel:+18009156271">1 (800) 915 6271</a></p>
+                                </li>
+                                <li>
+                                    <i class="ion-ios-email-outline"></i>
+                                    <p><a href="mailto:">support@malicfishing.com</a></p>
+                                    <p><a href="#:">Skype: malicfishing</a></p>
+                                </li>
+                                <li>
+                                    <i class="ion-ios-location-outline"></i>
+                                    <p>Esprit </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--// Single Widget -->
+
+                    <!-- Single Widget -->
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="single-widget widget-twitterfeed">
+                            <h6 class="widget-title">Twitter</h6>
+                            <ul>
+                                <li>
+                                    <h6><a href="#"><i class="ion-social-twitter-outline"></i> A fishing vessel
+                                            is a boat or ship used to catch fish in the
+                                            sea.</a></h6>
+                                    <span>3 hours ago</span>
+                                </li>
+                                <li>
+                                    <h6><a href="#"><i class="ion-social-twitter-outline"></i> A fishing vessel
+                                            is a boat or ship used to catch fish in the
+                                            sea.</a></h6>
+                                    <span>5 days ago</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--// Single Widget -->
+
+                    <!-- Single Widget -->
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="single-widget widget-instagram">
+                            <h6 class="widget-title">Instagram</h6>
+                            <ul id="instafeed" class="widget-instagram-photos"></ul>
+                        </div>
+                    </div>
+                    <!--// Single Widget -->
+
+                </div>
+            </div>
+        </div>
+
+        <div class="tm-footer-bottomarea bg-dark">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-7">
+                        <p class="tm-footer-copyright">Powered By <a href="https://thememarch.com/">Challngers</a> ©
+                            2020</p>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="tm-footer-payment">
+                            <img src="{{ asset('Front/') }}assets/images/payment-methods.png" alt="payment methods">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// Footer -->
+
+    <!-- Product Quickview -->
+    <div class="tm-product-quickview" id="tm-product-quickview">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-9 col-lg-10 col-12">
+                    <div class="tm-product-quickview-inner">
+                        <!-- Product Details -->
+                        <div class="tm-prodetails">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="tm-prodetails-images">
+                                        <div class="tm-prodetails-largeimages">
+                                            <div class="tm-prodetails-largeimage">
+                                                <img src="{{ asset('Front/') }}assets/images/products/product-image-1.jpg"
+                                                     alt="product image">
+                                            </div>
+                                            <div class="tm-prodetails-largeimage">
+                                                <img src="{{ asset('Front/') }}assets/images/products/product-image-2.jpg"
+                                                     alt="product image">
+                                            </div>
+                                            <div class="tm-prodetails-largeimage">
+                                                <img src="{{ asset('Front/') }}assets/images/products/product-image-3.jpg"
+                                                     alt="product image">
+                                            </div>
+                                            <div class="tm-prodetails-largeimage">
+                                                <img src="{{ asset('Front/') }}assets/images/products/product-image-1.jpg"
+                                                     alt="product image">
+                                            </div>
+                                            <div class="tm-prodetails-largeimage">
+                                                <img src="{{ asset('Front/') }}assets/images/products/product-image-2.jpg"
+                                                     alt="product image">
+                                            </div>
+                                            <div class="tm-prodetails-largeimage">
+                                                <img src="{{ asset('Front/') }}assets/images/products/product-image-3.jpg"
+                                                     alt="product image">
+                                            </div>
+                                        </div>
+                                        <div class="tm-prodetails-thumbnails">
+                                            <div class="tm-prodetails-thumbnail">
+                                                <img src="{{ asset('Front/') }}assets/images/products/product-image-thumb-1.jpg"
+                                                     alt="product image">
+                                            </div>
+                                            <div class="tm-prodetails-thumbnail">
+                                                <img src="{{ asset('Front/') }}assets/images/products/product-image-thumb-2.jpg"
+                                                     alt="product image">
+                                            </div>
+                                            <div class="tm-prodetails-thumbnail">
+                                                <img src="{{ asset('Front/') }}assets/images/products/product-image-thumb-3.jpg"
+                                                     alt="product image">
+                                            </div>
+                                            <div class="tm-prodetails-thumbnail">
+                                                <img src="{{ asset('Front/') }}assets/images/products/product-image-thumb-1.jpg"
+                                                     alt="product image">
+                                            </div>
+                                            <div class="tm-prodetails-thumbnail">
+                                                <img src="{{ asset('Front/') }}assets/images/products/product-image-thumb-2.jpg"
+                                                     alt="product image">
+                                            </div>
+                                            <div class="tm-prodetails-thumbnail">
+                                                <img src="{{ asset('Front/') }}assets/images/products/product-image-thumb-3.jpg"
+                                                     alt="product image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="tm-prodetails-content">
+                                        <h4 class="tm-prodetails-title">Fishing Reel</h4>
+                                        <div class="tm-ratingbox">
+                                            <span class="is-active"><i class="ion-android-star"></i></span>
+                                            <span class="is-active"><i class="ion-android-star"></i></span>
+                                            <span class="is-active"><i class="ion-android-star"></i></span>
+                                            <span class="is-active"><i class="ion-android-star"></i></span>
+                                            <span><i class="ion-android-star"></i></span>
+                                        </div>
+                                        <div class="tm-prodetails-price">
+                                            <span><del>$75.99</del> $59.99</span>
+                                        </div>
+                                        <ul class="tm-prodetails-infos">
+                                            <li>Catagory: <a href="shop.html">Fishing equipments</a></li>
+                                            <li>Tags: <a href="shop.html">fishing woobler</a>, <a
+                                                        href="shop.html">fising hook</a>, <a href="shop.html">fishing
+                                                    reels</a></li>
+                                            <li>Product ID: 100</li>
+                                            <li>Available: <span class="color-theme">In stock</span></li>
+                                        </ul>
+                                        <div class="tm-prodetails-paras">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mi
+                                                dolor, malesuada id metus a, mattis eleifend elit. Nullam pharetra
+                                                consequat ex in dapibus. Vestibulum ante ipsum primis in faucibus
+                                                orciluctus et ultrices posuere cubilia Curae.</p>
+                                        </div>
+                                        <div class="tm-prodetails-quantitycart">
+                                            <div class="tm-quantitybox">
+                                                <input type="text" value="1">
+                                            </div>
+                                            <a href="#" class="tm-button tm-button-dark">Add To Cart</a>
+                                        </div>
+
+                                        <div class="tm-prodetails-share">
+                                            <h6>Share :</h6>
+                                            <ul>
+                                                <li>"{{ socialButtons() }}"</i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// Product Details -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// Product Quickview -->
+
+    <button id="back-top-top"><i class="ion-arrow-up-c"></i></button>
+
+</div>
+<!--// Wrapper -->
+
+<!-- JS FILES HERE -->
+<!-- inject:js -->
+<script src="{{ asset('Front/') }}assets/js/main.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEDd_Sv9-p-I6bebrAMpmZBQvalqBE5Ds"></script>
+<script src="{{ asset('Front/') }}assets/js/mapjs/google-map.js"></script>
+
+<!-- endinject -->
+</body>
+
+
+<!-- Mirrored from thememarch.com/demo/html/malic/malic/login-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 26 Jan 2020 19:44:35 GMT -->
+</html>
+
+
