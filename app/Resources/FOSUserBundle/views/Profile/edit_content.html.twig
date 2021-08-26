@@ -1,0 +1,11 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<br><br><br>
+<div class="tm-form-inner">
+{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'tm-form-inner' } }) }}
+    {{ form_widget(form) }}
+    <br> <br> <br>
+        <input type="submit" class="tm-button tm-button-dark" value="{{ 'profile.edit.submit'|trans }}" />
+    <br> <br> <br>
+{{ form_end(form) }}
+</div>
+<br><br><br>
